@@ -1,25 +1,115 @@
-> library(raster)
-> library(rgdal)
-> library(caret)
-> library(RStoolbox)
 
-> beginCluster()
+###############################clear environment and console###############################
 
-> meta2003 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LT05_L1TP_090085_20031117_20161204_01_T1/LT05_L1TP_090085_20031117_20161204_01_T1_MTL.txt")
-> meta2018 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20181025_20181114_01_T1/LC08_L1TP_090085_20181025_20181114_01_T1_MTL.txt")
-> meta2020 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20201014_20201104_01_T1/LC08_L1TP_090085_20201014_20201104_01_T1_MTL.txt")
+rm(list = ls())
+cat("\014")
 
-> summary(meta2003)
-> summary(meta2018)
-> summary(meta2020)
+###############################set working dir###############################
 
-> TM2003 <- stackMeta(meta2003)
-> OLI2018 <- stackMeta(meta2018)
-> OLI2020 <- stackMeta(meta2020)
+dir.create("D:/CASA/modules/gis/coursework/data/1231")
+setwd("D:/CASA/modules/gis/coursework/data/1231")
 
-> mask <- readOGR("D:\CASA\modules\gis\coursework\data\preprocessing\maskpolygon.shp")
-> dem <- raster ("D:/CASA/modules/gis/coursework/data/rawdata/DEM.tif")
-> dem <- projectRaster(dem,TM2003)
+###############################Load required packages###############################
 
-> dem_clip1 <- crop(dem, extent(mask))
-> dem_clip <- mask(dem_clip1, mask)
+library(raster)
+library(rgdal)
+library(caret)
+library(RStoolbox)
+
+###############################Load image###############################
+
+## preprocess
+beginCluster()
+meta2003 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LT05_L1TP_090085_20031117_20161204_01_T1/LT05_L1TP_090085_20031117_20161204_01_T1_MTL.txt")
+meta2018 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20181025_20181114_01_T1/LC08_L1TP_090085_20181025_20181114_01_T1_MTL.txt")
+meta2020 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20201014_20201104_01_T1/LC08_L1TP_090085_20201014_20201104_01_T1_MTL.txt")
+
+summary(meta2003)
+summary(meta2018)
+summary(meta2020)
+
+## stack bands along with the metadata
+
+TM2003 <- stackMeta(meta2003)
+OLI2018 <- stackMeta(meta2018)
+OLI2020 <- stackMeta(meta2020)
+
+### clip to the area mask
+
+mask <- readOGR("D:/CASA/modules/gis/coursework/data/preprocessing/Namadgi National Park Border.shp")
+mask <- spTransform(mask, CRS(proj4string(TM2003)))
+dem <- raster ("D:/CASA/modules/gis/coursework/data/rawdata/DEM.tif")
+dem <- projectRaster(dem,TM2003)
+
+dem_clip1 <- crop(dem, extent(mask))
+dem_clip <- mask(dem_clip1, mask)
+
+TM2003_clip1 <- crop(TM2003, extent(mask))
+TM2003_clip <- mask(TM2003_clip1, mask)
+
+OLI2018_clip1 <- crop(OLI2018, extent(mask))
+OLI2018_clip <- mask(OLI2018_clip1, mask)
+
+OLI2020_clip1 <- crop(OLI2020, extent(mask))
+OLI2020_clip <- mask(OLI2020_clip1, mask)
+
+### Atmospheric correction using DOS 
+#(correct DN to at-surface-reflecatance with DOS (Chavez decay model))
+
+TM2003_dos <- radCor(TM2003_clip, meta2003, method = "dos", darkProp = 0.01)
+OLI2018_dos <- radCor(OLI2018_clip, meta2018, method = "dos", darkProp = 0.01)
+OLI2020_dos <- radCor(OLI2020_clip, meta2020, method = "dos", darkProp = 0.01)
+
+### Topographic correction
+
+TM2003_dos_topcor <-topCor(TM2003_dos, dem_clip, metaData = meta2003, method = "C")
+OLI2018_dos_topcor <- topCor(OLI2018_dos, dem_clip, metaData = meta2018, method = "C")
+OLI2020_dos_topcor <- topCor(OLI2020_dos, dem_clip, metaData = meta2020, method = "C")
+
+### Calculate Spectral Indices
+
+SI2003 <- spectralIndices(TM2003_dos_topcor, blue = 1, green = 2, red = 3, nir = 4, swir2 = 5, swir3 = 7 )
+SI2018 <- spectralIndices(OLI2018_dos_topcor, blue = 2, green = 3, red = 4, nir = 5,swir2 = 6,swir3 = 7)
+SI2020 <- spectralIndices(OLI2020_dos_topcor, blue = 2, green = 3, red = 4, nir = 5,swir2 = 6,swir3 = 7)
+
+# SI2020@data@names
+
+### Output Spectral Indices
+
+writeRaster(SI2003[[7]], "MNDWI_2003.TIF", overwrite=TRUE)
+writeRaster(SI2003[[8]], "MSAVI_2003.TIF", overwrite=TRUE)
+writeRaster(SI2003[[11]], "NDVI_2003.TIF", overwrite=TRUE)
+writeRaster(SI2003[[13]], "NDWI_2003.TIF", overwrite=TRUE)
+
+writeRaster(SI2018[[7]], "MNDWI_2018.TIF", overwrite=TRUE)
+writeRaster(SI2018[[8]], "MSAVI_2018.TIF", overwrite=TRUE)
+writeRaster(SI2018[[11]], "NDVI_2018.TIF", overwrite=TRUE)
+writeRaster(SI2018[[13]], "NDWI_2018.TIF", overwrite=TRUE)
+
+writeRaster(SI2020[[7]], "MNDWI_2020.TIF", overwrite=TRUE)
+writeRaster(SI2020[[8]], "MSAVI_2020.TIF", overwrite=TRUE)
+writeRaster(SI2020[[11]], "NDVI_2020.TIF", overwrite=TRUE)
+writeRaster(SI2020[[13]], "NDWI_2020.TIF", overwrite=TRUE)
+
+### Output Stacked Indices
+
+stackedIndices_2003 <- stack(SI2003[[7]], SI2003[[8]], SI2003[[11]], SI2003[[13]])
+writeRaster(stackedIndices_2003, "stackedIndices_2003.TIF", overwrite=TRUE)
+
+stackedIndices_2018 <- stack(SI2018[[7]], SI2018[[8]], SI2018[[11]], SI2018[[13]])
+writeRaster(stackedIndices_2018, "stackedIndices_2018.TIF", overwrite=TRUE)
+
+stackedIndices_2020 <- stack(SI2020[[7]], SI2020[[8]], SI2020[[11]], SI2020[[13]])
+writeRaster(stackedIndices_2020, "stackedIndices_2020.TIF", overwrite=TRUE)
+
+### Output pre processed raster
+
+writeRaster(TM2003_dos_topcor, "preprocessed_TM2003_dos_topcor.TIF", format="GTiff")
+writeRaster(OLI2018_dos_topcor, "preprocessed_OLI2018_dos_topcor.TIF", format="GTiff")
+writeRaster(OLI2020_dos_topcor, "preprocessed_OLI2020_dos_topcor.TIF", format="GTiff")
+
+endCluster()
+
+s <- stack(SI2003[[11]],SI2018[[11]],SI2020[[11]])
+names(s) <- c("2003", "2018", "2020")
+plot(s)
