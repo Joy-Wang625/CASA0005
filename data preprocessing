@@ -19,6 +19,7 @@ library(RStoolbox)
 ###############################Load image###############################
 
 ## preprocess
+
 beginCluster()
 meta2003 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LT05_L1TP_090085_20031117_20161204_01_T1/LT05_L1TP_090085_20031117_20161204_01_T1_MTL.txt")
 meta2018 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20181025_20181114_01_T1/LC08_L1TP_090085_20181025_20181114_01_T1_MTL.txt")
