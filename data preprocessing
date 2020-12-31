@@ -1,0 +1,25 @@
+> library(raster)
+> library(rgdal)
+> library(caret)
+> library(RStoolbox)
+
+> beginCluster()
+
+> meta2003 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LT05_L1TP_090085_20031117_20161204_01_T1/LT05_L1TP_090085_20031117_20161204_01_T1_MTL.txt")
+> meta2018 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20181025_20181114_01_T1/LC08_L1TP_090085_20181025_20181114_01_T1_MTL.txt")
+> meta2020 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20201014_20201104_01_T1/LC08_L1TP_090085_20201014_20201104_01_T1_MTL.txt")
+
+> summary(meta2003)
+> summary(meta2018)
+> summary(meta2020)
+
+> TM2003 <- stackMeta(meta2003)
+> OLI2018 <- stackMeta(meta2018)
+> OLI2020 <- stackMeta(meta2020)
+
+> mask <- readOGR("D:\CASA\modules\gis\coursework\data\preprocessing\maskpolygon.shp")
+> dem <- raster ("D:/CASA/modules/gis/coursework/data/rawdata/DEM.tif")
+> dem <- projectRaster(dem,TM2003)
+
+> dem_clip1 <- crop(dem, extent(mask))
+> dem_clip <- mask(dem_clip1, mask)
