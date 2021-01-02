@@ -1,1 +1,43 @@
 
+setwd("D:/CASA/modules/gis/coursework/data/0102")
+
+library(raster)
+library(rgdal)
+library(caret)
+library(RStoolbox)
+
+ndvi<- raster("D:/CASA/modules/gis/coursework/data/1231/NDVI_2020.tif")
+ndwi<-raster("D:/CASA/modules/gis/coursework/data/1231/NDWI_2020.tif")
+mndwi<-raster("D:/CASA/modules/gis/coursework/data/1231/MNDWI_2020.tif")
+msavi<-raster("D:/CASA/modules/gis/coursework/data/1231/MSAVI_2020.tif")
+
+img <- stack(ndvi, ndwi, mndwi, msavi)
+names(img) <- c ("NDVI", "NDWI", "MNDWI", "MSAVI")
+
+trainData <- shapefile("D:/CASA/modules/gis/coursework/data/rawdata/traindata_2020.shp")
+
+responseCol <- "class"
+
+dfAll = data.frame(matrix(vector(), nrow = 0, ncol = length(names(img)) + 1))   
+
+for (i in 1:length(unique(trainData[[responseCol]]))){
+  category <- unique(trainData[[responseCol]])[i]
+  categorymap <- trainData[trainData[[responseCol]] == category,]
+  dataSet <- extract(img, categorymap)
+  if(is(trainData, "SpatialPointsDataFrame")){
+    dataSet <- cbind(dataSet, class = as.numeric(rep(category, nrow(dataSet))))
+    dfAll <- rbind(dfAll, dataSet[complete.cases(dataSet),])
+  }
+  if(is(trainData, "SpatialPolygonsDataFrame")){
+    dataSet <- dataSet[!unlist(lapply(dataSet, is.null))]
+    dataSet <- lapply(dataSet, function(x){cbind(x, class = as.numeric(rep(category, nrow(x))))})
+    df <- do.call("rbind", dataSet)
+    dfAll <- rbind(dfAll, df)
+  }
+}
+
+nsamples <- 1000
+sdfAll <- dfAll[sample(1:nrow(dfAll), nsamples), ]
+
+beginCluster()
+modFit_rf <- train(as.factor(class) ~ NDVI+NDWI+MNDWI+MSAVI, method = "rf", data = sdfAll)
