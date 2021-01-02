@@ -14,7 +14,7 @@ msavi<-raster("D:/CASA/modules/gis/coursework/data/1231/MSAVI_2020.tif")
 img <- stack(ndvi, ndwi, mndwi, msavi)
 names(img) <- c ("NDVI", "NDWI", "MNDWI", "MSAVI")
 
-trainData <- shapefile("D:/CASA/modules/gis/coursework/data/rawdata/traindata_2020.shp")
+trainData_0 <- shapefile("D:/CASA/modules/gis/coursework/data/rawdata/traindata_2020.shp")
 trainData <- spTransform(trainData_0, CRS(proj4string(ndvi)))
 responseCol <- "class"
 
