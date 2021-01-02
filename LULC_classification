@@ -15,7 +15,7 @@ img <- stack(ndvi, ndwi, mndwi, msavi)
 names(img) <- c ("NDVI", "NDWI", "MNDWI", "MSAVI")
 
 trainData <- shapefile("D:/CASA/modules/gis/coursework/data/rawdata/traindata_2020.shp")
-
+trainData <- spTransform(trainData_0, CRS(proj4string(ndvi)))
 responseCol <- "class"
 
 dfAll = data.frame(matrix(vector(), nrow = 0, ncol = length(names(img)) + 1))   
