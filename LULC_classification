@@ -36,6 +36,8 @@ for (i in 1:length(unique(trainData[[responseCol]]))){
   }
 }
 
+write.table(dfAll, file = "matchclass_2020", )
+
 nsamples <- 1000
 sdfAll <- dfAll[sample(1:nrow(dfAll), nsamples), ]
 
