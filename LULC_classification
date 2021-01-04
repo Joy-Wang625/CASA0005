@@ -6,13 +6,13 @@ library(rgdal)
 library(caret)
 library(RStoolbox)
 
-ndvi<- raster("D:/CASA/modules/gis/coursework/data/1231/NDVI_2020.tif")
-ndwi<-raster("D:/CASA/modules/gis/coursework/data/1231/NDWI_2020.tif")
-mndwi<-raster("D:/CASA/modules/gis/coursework/data/1231/MNDWI_2020.tif")
-msavi<-raster("D:/CASA/modules/gis/coursework/data/1231/MSAVI_2020.tif")
+ndvi2020 <- raster("D:/CASA/modules/gis/coursework/data/1231/NDVI_2020.tif")
+ndwi2020 <- raster("D:/CASA/modules/gis/coursework/data/1231/NDWI_2020.tif")
+mndwi2020 <- raster("D:/CASA/modules/gis/coursework/data/1231/MNDWI_2020.tif")
+msavi2020 <- raster("D:/CASA/modules/gis/coursework/data/1231/MSAVI_2020.tif")
 
-img <- stack(ndvi, ndwi, mndwi, msavi)
-names(img) <- c ("NDVI", "NDWI", "MNDWI", "MSAVI")
+img2020 <- stack(ndvi2020, ndwi2020, mndwi2020, msavi2020)
+names(img2020) <- c ("NDVI", "NDWI", "MNDWI", "MSAVI")
 
 trainData_0 <- shapefile("D:/CASA/modules/gis/coursework/data/rawdata/traindata_2020.shp")
 trainData <- spTransform(trainData_0, CRS(proj4string(ndvi)))
@@ -41,5 +41,36 @@ write.table(dfAll, file = "matchclass_2020", )
 nsamples <- 1000
 sdfAll <- dfAll[sample(1:nrow(dfAll), nsamples), ]
 
-beginCluster()
 modFit_rf <- train(as.factor(class) ~ NDVI+NDWI+MNDWI+MSAVI, method = "rf", data = sdfAll)
+
+beginCluster()
+preds_rf_2020 <- clusterR(img2020, raster::predict, args = list(model = modFit_rf))
+endCluster()
+
+output = preds_rf_2020
+plot(preds_rf_2020)
+writeRaster(preds_rf_2020, filename = "predictedRFclassification2020.TIF", overwrite=TRUE )
+
+ndvi2018 <- raster("D:/CASA/modules/gis/coursework/data/1231/NDVI_2018.tif")
+ndwi2018 <- raster("D:/CASA/modules/gis/coursework/data/1231/NDWI_2018.tif")
+mndwi2018 <- raster("D:/CASA/modules/gis/coursework/data/1231/MNDWI_2018.tif")
+msavi2018 <- raster("D:/CASA/modules/gis/coursework/data/1231/MSAVI_2018.tif")
+
+img2018 <- stack(ndvi2018, ndwi2018, mndwi2018, msavi2018)
+names(img2018) <- c ("NDVI", "NDWI", "MNDWI", "MSAVI")
+
+beginCluster()
+preds_rf_2018 <- clusterR(img2018, raster::predict, args = list(model = modFit_rf))
+endCluster()
+
+ndvi2003 <- raster("D:/CASA/modules/gis/coursework/data/1231/NDVI_2003.tif")
+ndwi2003 <- raster("D:/CASA/modules/gis/coursework/data/1231/NDWI_2003.tif")
+mndwi2003 <- raster("D:/CASA/modules/gis/coursework/data/1231/MNDWI_2003.tif")
+msavi2003 <- raster("D:/CASA/modules/gis/coursework/data/1231/MSAVI_2003.tif")
+
+img2003 <- stack(ndvi2003, ndwi2003, mndwi2003, msavi2003)
+names(img2003) <- c ("NDVI", "NDWI", "MNDWI", "MSAVI")
+
+beginCluster()
+preds_rf_2003 <- clusterR(img2003, raster::predict, args = list(model = modFit_rf))
+endCluster()
