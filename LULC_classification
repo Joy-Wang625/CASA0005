@@ -41,7 +41,7 @@ write.table(dfAll, file = "matchclass_2020", )
 nsamples <- 1000
 sdfAll <- dfAll[sample(1:nrow(dfAll), nsamples), ]
 
-modFit_rf <- train(as.factor(class) ~ NDVI+NDWI+MNDWI+MSAVI, method = "rf", data = sdfAll)
+modFit_rf <- train(as.factor(class) ~ NDVI+NDWI+MNDWI+MSAVI, method = "rf", data = sdfAll, na.action = na.exclude)
 
 beginCluster()
 preds_rf_2020 <- clusterR(img2020, raster::predict, args = list(model = modFit_rf))
