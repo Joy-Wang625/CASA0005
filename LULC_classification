@@ -63,6 +63,10 @@ beginCluster()
 preds_rf_2018 <- clusterR(img2018, raster::predict, args = list(model = modFit_rf))
 endCluster()
 
+output = preds_rf_2018
+plot(preds_rf_2018)
+writeRaster(preds_rf_2018, filename = "predictedRFclassification2018.TIF", overwrite=TRUE )
+
 ndvi2003 <- raster("D:/CASA/modules/gis/coursework/data/1231/NDVI_2003.tif")
 ndwi2003 <- raster("D:/CASA/modules/gis/coursework/data/1231/NDWI_2003.tif")
 mndwi2003 <- raster("D:/CASA/modules/gis/coursework/data/1231/MNDWI_2003.tif")
@@ -74,3 +78,7 @@ names(img2003) <- c ("NDVI", "NDWI", "MNDWI", "MSAVI")
 beginCluster()
 preds_rf_2003 <- clusterR(img2003, raster::predict, args = list(model = modFit_rf))
 endCluster()
+
+output = preds_rf_2003
+plot(preds_rf_2003)
+writeRaster(preds_rf_2003, filename = "predictedRFclassification2003.TIF", overwrite=TRUE )
