@@ -1,4 +1,10 @@
 
+
+library(raster)
+library(rgdal)
+library(caret)
+library(RStoolbox)
+
 ############################### fit model ###############################
 
 dfAll <- read.table("dfAll.txt", header = T,)
