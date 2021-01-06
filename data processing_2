@@ -1,0 +1,61 @@
+
+meta2013 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20131230_20170427_01_T1/LC08_L1TP_090085_20131230_20170427_01_T1_MTL.txt")
+meta2019 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20190113_20190131_01_T1/LC08_L1TP_090085_20190113_20190131_01_T1_MTL.txt")
+meta2020 <- readMeta("D:/CASA/modules/gis/coursework/data/landsat/LC08_L1TP_090085_20201201_20201217_01_T1/LC08_L1TP_090085_20201201_20201217_01_T1_MTL.txt")
+
+summary(meta2013)
+summary(meta2019)
+summary(meta2020)
+
+OLI2013 <- stackMeta(meta2013)
+OLI2019 <- stackMeta(meta2019)
+OLI2020 <- stackMeta(meta2020)
+
+mask <- readOGR("D:/CASA/modules/gis/coursework/data/preprocessing/Namadgi National Park Border.shp")
+mask <- spTransform(mask, CRS(proj4string(OLI2013)))
+
+dem <- raster ("D:/CASA/modules/gis/coursework/data/rawdata/DEM.tif")
+dem <- projectRaster(dem,OLI2013)
+
+dem_clip1 <- crop(dem, extent(mask))
+dem_clip <- mask(dem_clip1, mask)
+
+OLI2013_clip1 <- crop(OLI2013, extent(mask))
+OLI2013_clip <- mask(OLI2013_clip1, mask)
+ 
+OLI2019_clip1 <- crop(OLI2019, extent(mask))
+OLI2019_clip <- mask(OLI2019_clip1, mask)
+
+OLI2020_clip1 <- crop(OLI2020, extent(mask))
+OLI2020_clip <- mask(OLI2020_clip1, mask)
+
+OLI2013_dos <- radCor(OLI2013_clip, meta2013, method = "dos", darkProp = 0.01)
+OLI2019_dos <- radCor(OLI2019_clip, meta2019, method = "dos", darkProp = 0.01)
+OLI2020_dos <- radCor(OLI2020_clip, meta2020, method = "dos", darkProp = 0.01)
+
+OLI2013_dos_topcor <- topCor(OLI2013_dos, dem_clip, metaData = meta2013, method = "C")
+OLI2019_dos_topcor <- topCor(OLI2019_dos, dem_clip, metaData = meta2019, method = "C")
+OLI2020_dos_topcor <- topCor(OLI2020_dos, dem_clip, metaData = meta2020, method = "C")
+
+SI2013 <- spectralIndices(OLI2013_dos_topcor, blue = 2, green = 3, red = 4, nir = 5,swir2 = 6,swir3 = 7)
+SI2019 <- spectralIndices(OLI2019_dos_topcor, blue = 2, green = 3, red = 4, nir = 5,swir2 = 6,swir3 = 7)
+SI2020 <- spectralIndices(OLI2020_dos_topcor, blue = 2, green = 3, red = 4, nir = 5,swir2 = 6,swir3 = 7)
+
+writeRaster(SI2013[[7]], "MNDWI_2013.TIF", overwrite=TRUE)
+writeRaster(SI2013[[8]], "MSAVI_2013.TIF", overwrite=TRUE)
+writeRaster(SI2013[[11]], "NDVI_2013.TIF", overwrite=TRUE)
+writeRaster(SI2013[[13]], "NDWI_2013.TIF", overwrite=TRUE)
+ 
+writeRaster(SI2019[[7]], "MNDWI_2019.TIF", overwrite=TRUE)
+writeRaster(SI2019[[8]], "MSAVI_2019.TIF", overwrite=TRUE)
+writeRaster(SI2019[[11]], "NDVI_2019.TIF", overwrite=TRUE)
+writeRaster(SI2019[[13]], "NDWI_2019.TIF", overwrite=TRUE)
+
+writeRaster(SI2020[[7]], "MNDWI_2020.TIF", overwrite=TRUE)
+writeRaster(SI2020[[8]], "MSAVI_2020.TIF", overwrite=TRUE)
+writeRaster(SI2020[[11]], "NDVI_2020.TIF", overwrite=TRUE)
+writeRaster(SI2020[[13]], "NDWI_2020.TIF", overwrite=TRUE)
+
+writeRaster(OLI2013_dos_topcor, "preprocessed_OLI2013_dos_topcor.TIF", format="GTiff")
+writeRaster(OLI2019_dos_topcor, "preprocessed_OLI2019_dos_topcor.TIF", format="GTiff")
+writeRaster(OLI2020_dos_topcor, "preprocessed_OLI2020_dos_topcor.TIF", format="GTiff")
