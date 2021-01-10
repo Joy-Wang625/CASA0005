@@ -1,0 +1,67 @@
+ARCRASTER  4*D:\CASA\modules\gis\coursework\data\0109\finalascii2003.txt*D:\CASA\modules\gis\coursework\data\0109\landuse2003.rst*2*Plane*Meters*1.0
+DISPLAY image file landuse2003 with symbol file quant.  Title, Legend.
+ARCRASTER  4*D:\CASA\modules\gis\coursework\data\0109\finalascii2013.txt*D:\CASA\modules\gis\coursework\data\0109\landuse2013.rst*2*Plane*Meters*1.0
+DISPLAY image file landuse2013 with symbol file quant.  Title, Legend.
+ARCRASTER  4*D:\CASA\modules\gis\coursework\data\0109\finalascii2019.txt*D:\CASA\modules\gis\coursework\data\0109\landuse2019.rst*2*Plane*Meters*1.0
+DISPLAY image file landuse2019 with symbol file quant.  Title, Legend.
+ARCRASTER  4*D:\CASA\modules\gis\coursework\data\0109\finalascii2020.txt*D:\CASA\modules\gis\coursework\data\0109\landuse2020.rst*2*Plane*Meters*1.0
+DISPLAY image file landuse2020 with symbol file quant.  Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\landuse2003.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2003.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file LULC2003 with symbol file quant.  Autoscale, Title, Legend.
+DISPLAY image file D:\CASA\modules\gis\coursework\data\0109\LULC2003.rst with symbol file C:\Program Files (x86)\IDRISI Selva\Symbols\qual.smp.  Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\landuse2013.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file LULC2013 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\landuse2019.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2019.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file LULC2019 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\landuse2020.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2020.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file LULC2020 with symbol file quant.  Autoscale, Title, Legend.
+MARKOV  D:\CASA\modules\gis\coursework\data\0109\landuse2003.rst*D:\CASA\modules\gis\coursework\data\0109\landuse2013.rst*D:\CASA\modules\gis\coursework\data\0109\matrics5a*2*0.1*10*5
+Markov  Error -999
+Unexpected error condition encountered.  Please check the integrity of the operation performed, the data files used, and the amount of disk space available.
+MARKOV  D:\CASA\modules\gis\coursework\data\0109\LULC2003.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\matrics5a*1*0.1*10*5
+MARKOV  D:\CASA\modules\gis\coursework\data\0109\LULC2003.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\matrics10a*1*0.1*10*10
+MARKOV  D:\CASA\modules\gis\coursework\data\0109\LULC2003.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\matrics15a*1*0.1*10*15
+MARKOV  D:\CASA\modules\gis\coursework\data\0109\LULC2003.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\matrics30a*1*0.1*10*30
+Output file D:\CASA\modules\gis\coursework\data\0109\matrics30a.rgf already exists. Overwrite?
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\2013c1.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file 2013c1 with symbol file quant.  Autoscale, Title, Legend.
+DISPLAY image file D:\CASA\modules\gis\coursework\data\0109\2013c1.rst with symbol file C:\Program Files (x86)\IDRISI Selva\Symbols\qual.smp.  Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\2013c2.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file 2013c2 with symbol file quant.  Autoscale, Title, Legend.
+DISPLAY image file D:\CASA\modules\gis\coursework\data\0109\2013c1.rst with symbol file C:\Program Files (x86)\IDRISI Selva\Symbols\qual.smp.  Title, Legend.
+DISPLAY image file D:\CASA\modules\gis\coursework\data\0109\2013c2.rst with symbol file C:\Program Files (x86)\IDRISI Selva\Symbols\qual.smp.  Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\2013c3.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file 2013c3 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\2013c4.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file 2013c4 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2020.rst*D:\CASA\modules\gis\coursework\data\0109\2020c4.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file 2020c4 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2020.rst*D:\CASA\modules\gis\coursework\data\0109\2020c3.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file 2020c3 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2020.rst*D:\CASA\modules\gis\coursework\data\0109\2020c2.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file 2020c2 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2020.rst*D:\CASA\modules\gis\coursework\data\0109\2020c1.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file 2020c1 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2020.rst*D:\CASA\modules\gis\coursework\data\0109\driving123.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file driving123 with symbol file quant.  Autoscale, Title, Legend.
+RECLASS  I*D:\CASA\modules\gis\coursework\data\0109\LULC2020.rst*D:\CASA\modules\gis\coursework\data\0109\driving4.rst*3*D:\CASA\modules\gis\coursework\data\0109\idrtemp.rcl*1
+DISPLAY image file driving4 with symbol file quant.  Autoscale, Title, Legend.
+LOGISTICREG  1*D:\CASA\modules\gis\coursework\data\0109\TmpFrm_Logitreg_ind.id$*D:\CASA\modules\gis\coursework\data\0109\2013c1.rst*D:\CASA\modules\gis\coursework\data\0109\2003c1pre.rst*D:\CASA\modules\gis\coursework\data\0109\2003c1res.rst*NONE*N*1*10
+DISPLAY image file 2003c1pre with symbol file quant.  Autoscale, Title, Legend.
+LOGISTICREG  1*D:\CASA\modules\gis\coursework\data\0109\TmpFrm_Logitreg_ind.id$*D:\CASA\modules\gis\coursework\data\0109\2013c2.rst*D:\CASA\modules\gis\coursework\data\0109\2003c2pre.rst*D:\CASA\modules\gis\coursework\data\0109\2003c2res.rst*NONE*N*1*10
+DISPLAY image file 2003c2pre with symbol file quant.  Autoscale, Title, Legend.
+LOGISTICREG  1*D:\CASA\modules\gis\coursework\data\0109\TmpFrm_Logitreg_ind.id$*D:\CASA\modules\gis\coursework\data\0109\2013c3.rst*D:\CASA\modules\gis\coursework\data\0109\2003c3pre.rst*D:\CASA\modules\gis\coursework\data\0109\2003c3res.rst*NONE*N*1*10
+DISPLAY image file 2003c3pre with symbol file quant.  Autoscale, Title, Legend.
+LOGISTICREG  1*D:\CASA\modules\gis\coursework\data\0109\TmpFrm_Logitreg_ind.id$*D:\CASA\modules\gis\coursework\data\0109\2013c4.rst*D:\CASA\modules\gis\coursework\data\0109\2013c4pre.rst*D:\CASA\modules\gis\coursework\data\0109\2013c4res.rst*NONE*N*1*10
+DISPLAY image file 2013c4pre with symbol file quant.  Autoscale, Title, Legend.
+LOGISTICREG  1*D:\CASA\modules\gis\coursework\data\0109\TmpFrm_Logitreg_ind.id$*D:\CASA\modules\gis\coursework\data\0109\2020c4.rst*D:\CASA\modules\gis\coursework\data\0109\2020c4pre.rst*D:\CASA\modules\gis\coursework\data\0109\2020c4res.rst*NONE*N*1*10
+DISPLAY image file 2020c4pre with symbol file quant.  Autoscale, Title, Legend.
+LOGISTICREG  1*D:\CASA\modules\gis\coursework\data\0109\TmpFrm_Logitreg_ind.id$*D:\CASA\modules\gis\coursework\data\0109\2020c3.rst*D:\CASA\modules\gis\coursework\data\0109\2020c3pre.rst*D:\CASA\modules\gis\coursework\data\0109\2020c3res.rst*NONE*N*1*10
+DISPLAY image file 2020c3pre with symbol file quant.  Autoscale, Title, Legend.
+LOGISTICREG  1*D:\CASA\modules\gis\coursework\data\0109\TmpFrm_Logitreg_ind.id$*D:\CASA\modules\gis\coursework\data\0109\2020c2.rst*D:\CASA\modules\gis\coursework\data\0109\2020c2pre.rst*D:\CASA\modules\gis\coursework\data\0109\2020c2res.rst*NONE*N*1*10
+DISPLAY image file 2020c2pre with symbol file quant.  Autoscale, Title, Legend.
+LOGISTICREG  1*D:\CASA\modules\gis\coursework\data\0109\TmpFrm_Logitreg_ind.id$*D:\CASA\modules\gis\coursework\data\0109\2020c1.rst*D:\CASA\modules\gis\coursework\data\0109\2020c1pre.rst*D:\CASA\modules\gis\coursework\data\0109\2020c1res.rst*NONE*N*1*10
+DISPLAY image file 2020c1pre with symbol file quant.  Autoscale, Title, Legend.
+Collection editor accessed.
+CA_MARKOV  D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\matrics5atransition_areas.txt*D:\CASA\modules\gis\coursework\data\0109\suitability2013.rgf*D:\CASA\modules\gis\coursework\data\0109\prediction2019.rst*5*1
+CA_MARKOV  D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\matrics5atransition_areas.txt*D:\CASA\modules\gis\coursework\data\0109\suitability2013.rgf*D:\CASA\modules\gis\coursework\data\0109\prediction2019.rst*5*1

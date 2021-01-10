@@ -1,0 +1,26 @@
+file format : IDRISI Raster A.1
+file title  : Markovian Conditional Probability of being class_2
+data type   : real
+file type   : binary
+columns     : 1032
+rows        : 2368
+ref. system : plane
+ref. units  : m
+unit dist.  : 1.0000000
+min. X      : 659895.0000000
+max. X      : 690855.0000000
+min. Y      : -3977055.0000000
+max. Y      : -3906015.0000000
+pos'n error : unknown
+resolution  : 30.0000000
+min. value  : 0.0000000
+max. value  : 0.5252404
+display min : 0.0000000
+display max : 0.5252404
+value units : unspecified
+value error : unknown
+flag value  : none
+flag def'n  : none
+legend cats : 0
+lineage     : This file was created by MARKOV with the command line: 
+lineage     : D:\CASA\modules\gis\coursework\data\0109\LULC2003.rst*D:\CASA\modules\gis\coursework\data\0109\LULC2013.rst*D:\CASA\modules\gis\coursework\data\0109\matrics5a*1*0.1*10*5

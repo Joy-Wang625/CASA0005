@@ -1,0 +1,8 @@
+Cells in :     Expected to transition to :
+
+                 Cl.  1       Cl.  2       Cl.  3       Cl.  4    
+
+Class 1  :       974613        68060       102972            0 
+Class 2  :         7336        24189        14525            3 
+Class 3  :        49656           0          1365           27 
+Class 4  :            0           22          386         2221 
